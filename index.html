@@ -1920,11 +1920,14 @@
     </div>
     <div class="off-canvas-overlay"></div>
 
-    <!-- Hero Section with Video -->
+    <!-- Hero Section with Enhanced Video -->
 <section class="hero" id="home">
     <video autoplay muted loop playsinline class="hero-video" 
-           poster="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80">
+           poster="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+           preload="auto"
+           onloadeddata="this.style.opacity='1'">
         <source src="https://res.cloudinary.com/dbwpv4j63/video/upload/v1764356202/hero_s5k28z.mp4" type="video/mp4">
+        <source src="https://res.cloudinary.com/dbwpv4j63/video/upload/v1764356202/hero_s5k28z.webm" type="video/webm">
         Your browser does not support the video tag.
     </video>
     <div class="hero-container">
