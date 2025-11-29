@@ -993,7 +993,7 @@
             border-radius: 30px;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.4rem;
+            font-size: 0.8rem;
             letter-spacing: 1px;
             background: var(--secondary); /* تغيير الخلفية إلى الأبيض */
             color: var(--primary); /* تغيير النص إلى الأسود */
@@ -1001,7 +1001,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             box-shadow: var(--shadow);
-            border: 2px solid white(--primary); /* إضافة حدود سوداء */
+            border: 2px solid var(--primary); /* إضافة حدود سوداء */
         }
 
         /* ===== SCROLLING BRANDS SECTION ===== */
@@ -2265,6 +2265,7 @@ Built for athletes. Loved by everyday champions.
         <div class="container">
             <div class="section-header">
                 <h4 class="section-title">SHOP BY BRANDS</h4>
+            </div>
 
             <button class="scroll-nav prev">
                 <i class="fas fa-chevron-left"></i>
@@ -2404,28 +2405,28 @@ Built for athletes. Loved by everyday champions.
     <section class="categories-section">
         <div class="container">
             <div class="categories-grid">
-                <div class="category-card" style="background-image: url('/Steps-Shoes Template/images/a8ec6050f4a3eae0d2d74290cef86054.jpg');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
                     <div class="category-content">
                         <h3>Men</h3>
                         <p>Athletic & Performance</p>
                         <a href="#men" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('/Steps-Shoes Template/images/Screenshot_20251128_163941_com.android.gallery3d_edit_1203893859223067.jpg');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
                     <div class="category-content">
                         <h3>Women</h3>
                         <p>Style & Performance</p>
                         <a href="#women" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('/Steps-Shoes Template/images/Screenshot_20251128_163719_com.android.gallery3d_edit_1203826817887140.jpg');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
                     <div class="category-content">
                         <h3>Kids</h3>
                         <p>Fun & Comfort</p>
                         <a href="#kids" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('Picsart_25-11-28_15-27-39-445.jpg');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
                     <div class="category-content">
                         <h3>New</h3>
                         <p>Discover what's new today</p>
@@ -2574,6 +2575,8 @@ Built for athletes. Loved by everyday champions.
             const offCanvasClose = document.querySelector('.off-canvas-close');
             
             function toggleOffCanvasMenu() {
+                if (!menuToggle || !offCanvasMenu || !offCanvasOverlay) return;
+                
                 menuToggle.classList.toggle('active');
                 offCanvasMenu.classList.toggle('active');
                 offCanvasOverlay.classList.toggle('active');
@@ -2602,6 +2605,8 @@ Built for athletes. Loved by everyday champions.
                     e.stopPropagation();
                     
                     const dropdownMenu = this.closest('li').querySelector('.dropdown-menu');
+                    if (!dropdownMenu) return;
+                    
                     const isActive = dropdownMenu.classList.contains('active');
                     
                     // Close all other dropdowns
@@ -2675,6 +2680,8 @@ Built for athletes. Loved by everyday champions.
 
             function updateCartUI() {
                 // Clear cart items container
+                if (!cartItemsContainer) return;
+                
                 cartItemsContainer.innerHTML = '';
                 
                 if (cartItems.length === 0) {
@@ -2688,7 +2695,7 @@ Built for athletes. Loved by everyday champions.
                             <a href="#products" class="btn btn-primary">Shop Now</a>
                         </div>
                     `;
-                    totalPriceElement.textContent = '$0.00';
+                    if (totalPriceElement) totalPriceElement.textContent = '$0.00';
                 } else {
                     // Add each item to cart UI
                     cartItems.forEach((item, index) => {
@@ -2737,7 +2744,7 @@ Built for athletes. Loved by everyday champions.
                     
                     // Calculate total price
                     const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-                    totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+                    if (totalPriceElement) totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
                 }
             }
 
@@ -2749,7 +2756,7 @@ Built for athletes. Loved by everyday champions.
                 } else {
                     // Update cart count
                     cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-                    cartCountElement.textContent = cartCount;
+                    if (cartCountElement) cartCountElement.textContent = cartCount;
                     
                     // Update cart UI
                     updateCartUI();
@@ -2761,7 +2768,7 @@ Built for athletes. Loved by everyday champions.
                 
                 // Update cart count
                 cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-                cartCountElement.textContent = cartCount;
+                if (cartCountElement) cartCountElement.textContent = cartCount;
                 
                 // Update cart UI
                 updateCartUI();
@@ -2775,6 +2782,8 @@ Built for athletes. Loved by everyday champions.
             const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
 
             function toggleCartSidebar() {
+                if (!cartSidebar || !cartOverlay) return;
+                
                 cartSidebar.classList.toggle('active');
                 cartOverlay.classList.toggle('active');
                 document.body.style.overflow = cartSidebar.classList.contains('active') ? 'hidden' : '';
@@ -2803,8 +2812,9 @@ Built for athletes. Loved by everyday champions.
             
             if (searchBtn) {
                 searchBtn.addEventListener('click', function() {
+                    if (!searchContainer) return;
                     searchContainer.classList.toggle('active');
-                    if (searchContainer.classList.contains('active')) {
+                    if (searchContainer.classList.contains('active') && searchInput) {
                         searchInput.focus();
                     }
                 });
@@ -2813,7 +2823,7 @@ Built for athletes. Loved by everyday champions.
             // Close search when clicking outside
             document.addEventListener('click', function(event) {
                 if (!event.target.closest('.search-container') && !event.target.closest('.search-btn')) {
-                    searchContainer.classList.remove('active');
+                    if (searchContainer) searchContainer.classList.remove('active');
                 }
             });
 
@@ -2822,6 +2832,7 @@ Built for athletes. Loved by everyday champions.
                 searchInput.addEventListener('input', function() {
                     const searchTerm = this.value.trim();
                     const searchResults = document.querySelector('.search-results');
+                    if (!searchResults) return;
                     
                     if (searchTerm.length > 2) {
                         // Simulate search results
@@ -2878,12 +2889,14 @@ Built for athletes. Loved by everyday champions.
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 100) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.backdropFilter = 'blur(10px)';
-                } else {
-                    navbar.style.background = 'var(--secondary)';
-                    navbar.style.backdropFilter = 'none';
+                if (navbar) {
+                    if (window.scrollY > 100) {
+                        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                        navbar.style.backdropFilter = 'blur(10px)';
+                    } else {
+                        navbar.style.background = 'var(--secondary)';
+                        navbar.style.backdropFilter = 'none';
+                    }
                 }
             });
 
@@ -2926,10 +2939,15 @@ Built for athletes. Loved by everyday champions.
                 }
 
                 updateDisplay(days, hours, minutes, seconds) {
-                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                    const daysEl = document.getElementById('days');
+                    const hoursEl = document.getElementById('hours');
+                    const minutesEl = document.getElementById('minutes');
+                    const secondsEl = document.getElementById('seconds');
+                    
+                    if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+                    if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+                    if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+                    if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
                 }
 
                 resetTimer() {
@@ -3085,7 +3103,9 @@ Built for athletes. Loved by everyday champions.
                 setTimeout(() => {
                     notification.style.transform = 'translateX(400px)';
                     setTimeout(() => {
-                        notification.remove();
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
                     }, 300);
                 }, 3000);
             }
@@ -3095,8 +3115,8 @@ Built for athletes. Loved by everyday champions.
             if (newsletterForm) {
                 newsletterForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    const email = this.querySelector('input[type="email"]').value;
-                    if (email) {
+                    const emailInput = this.querySelector('input[type="email"]');
+                    if (emailInput && emailInput.value) {
                         showNotification('Successfully subscribed to newsletter!', 'success');
                         this.reset();
                     }
@@ -3113,9 +3133,9 @@ Built for athletes. Loved by everyday champions.
             const offCanvasOverlay = document.querySelector('.off-canvas-overlay');
             
             if (window.innerWidth > 768) {
-                offCanvasMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                offCanvasOverlay.classList.remove('active');
+                if (offCanvasMenu) offCanvasMenu.classList.remove('active');
+                if (menuToggle) menuToggle.classList.remove('active');
+                if (offCanvasOverlay) offCanvasOverlay.classList.remove('active');
                 document.body.style.overflow = '';
                 
                 // Close all dropdowns
