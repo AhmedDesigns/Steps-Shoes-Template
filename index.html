@@ -993,7 +993,7 @@
             border-radius: 30px;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.4rem;
             letter-spacing: 1px;
             background: var(--secondary); /* تغيير الخلفية إلى الأبيض */
             color: var(--primary); /* تغيير النص إلى الأسود */
@@ -1001,7 +1001,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             box-shadow: var(--shadow);
-            border: 2px solid var(--primary); /* إضافة حدود سوداء */
+            border: 2px solid white(--primary); /* إضافة حدود سوداء */
         }
 
         /* ===== SCROLLING BRANDS SECTION ===== */
@@ -2265,7 +2265,6 @@ Built for athletes. Loved by everyday champions.
         <div class="container">
             <div class="section-header">
                 <h4 class="section-title">SHOP BY BRANDS</h4>
-            </div>
 
             <button class="scroll-nav prev">
                 <i class="fas fa-chevron-left"></i>
@@ -2405,28 +2404,28 @@ Built for athletes. Loved by everyday champions.
     <section class="categories-section">
         <div class="container">
             <div class="categories-grid">
-                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <div class="category-content">
                         <h3>Men</h3>
                         <p>Athletic & Performance</p>
                         <a href="#men" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <div class="category-content">
                         <h3>Women</h3>
                         <p>Style & Performance</p>
                         <a href="#women" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1463100099107-aa0980c362e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <div class="category-content">
                         <h3>Kids</h3>
                         <p>Fun & Comfort</p>
                         <a href="#kids" class="category-link">Shop Now</a>
                     </div>
                 </div>
-                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                <div class="category-card" style="background-image: url('https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <div class="category-content">
                         <h3>New</h3>
                         <p>Discover what's new today</p>
@@ -2575,8 +2574,6 @@ Built for athletes. Loved by everyday champions.
             const offCanvasClose = document.querySelector('.off-canvas-close');
             
             function toggleOffCanvasMenu() {
-                if (!menuToggle || !offCanvasMenu || !offCanvasOverlay) return;
-                
                 menuToggle.classList.toggle('active');
                 offCanvasMenu.classList.toggle('active');
                 offCanvasOverlay.classList.toggle('active');
@@ -2605,8 +2602,6 @@ Built for athletes. Loved by everyday champions.
                     e.stopPropagation();
                     
                     const dropdownMenu = this.closest('li').querySelector('.dropdown-menu');
-                    if (!dropdownMenu) return;
-                    
                     const isActive = dropdownMenu.classList.contains('active');
                     
                     // Close all other dropdowns
@@ -2633,177 +2628,8 @@ Built for athletes. Loved by everyday champions.
                 });
             });
 
-            // Cart functionality
-            let cartCount = 0;
-            let cartItems = [];
-            const cartCountElement = document.querySelector('.cart-count');
-            const cartItemsContainer = document.querySelector('.cart-items');
-            const totalPriceElement = document.querySelector('.total-price');
-            
-            // Add to cart buttons
-            const addToCartButtons = document.querySelectorAll('.add-to-cart');
-            
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const productData = JSON.parse(this.getAttribute('data-product'));
-                    addToCart(productData);
-                    
-                    const productTitle = productData.name;
-                    showNotification(`${productTitle} added to cart!`, 'success');
-                });
-            });
-
-            function addToCart(product) {
-                // Check if product already exists in cart
-                const existingItem = cartItems.find(item => item.name === product.name);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    product.quantity = 1;
-                    cartItems.push(product);
-                }
-                
-                // Update cart count
-                cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-                if (cartCountElement) {
-                    cartCountElement.textContent = cartCount;
-                    cartCountElement.style.animation = 'bounce 0.5s';
-                    setTimeout(() => {
-                        cartCountElement.style.animation = '';
-                    }, 500);
-                }
-                
-                // Update cart UI
-                updateCartUI();
-            }
-
-            function updateCartUI() {
-                // Clear cart items container
-                if (!cartItemsContainer) return;
-                
-                cartItemsContainer.innerHTML = '';
-                
-                if (cartItems.length === 0) {
-                    // Show empty cart message
-                    cartItemsContainer.innerHTML = `
-                        <div class="empty-cart">
-                            <div class="empty-cart-icon">
-                                <i class="fas fa-shopping-bag"></i>
-                            </div>
-                            <p>Your shopping cart is empty</p>
-                            <a href="#products" class="btn btn-primary">Shop Now</a>
-                        </div>
-                    `;
-                    if (totalPriceElement) totalPriceElement.textContent = '$0.00';
-                } else {
-                    // Add each item to cart UI
-                    cartItems.forEach((item, index) => {
-                        const cartItemElement = document.createElement('div');
-                        cartItemElement.className = 'cart-item';
-                        cartItemElement.innerHTML = `
-                            <div class="cart-item-image">
-                                <img src="${item.image}" alt="${item.name}">
-                            </div>
-                            <div class="cart-item-details">
-                                <h4 class="cart-item-title">${item.name}</h4>
-                                <p class="cart-item-category">${item.category}</p>
-                                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                                <div class="cart-item-actions">
-                                    <button class="quantity-btn minus-btn" data-index="${index}">-</button>
-                                    <input type="text" class="quantity-input" value="${item.quantity}" readonly>
-                                    <button class="quantity-btn plus-btn" data-index="${index}">+</button>
-                                    <button class="remove-item" data-index="${index}"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        `;
-                        cartItemsContainer.appendChild(cartItemElement);
-                    });
-                    
-                    // Add event listeners for quantity buttons and remove buttons
-                    document.querySelectorAll('.minus-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const index = parseInt(this.getAttribute('data-index'));
-                            updateQuantity(index, -1);
-                        });
-                    });
-                    
-                    document.querySelectorAll('.plus-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const index = parseInt(this.getAttribute('data-index'));
-                            updateQuantity(index, 1);
-                        });
-                    });
-                    
-                    document.querySelectorAll('.remove-item').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const index = parseInt(this.getAttribute('data-index'));
-                            removeFromCart(index);
-                        });
-                    });
-                    
-                    // Calculate total price
-                    const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-                    if (totalPriceElement) totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
-                }
-            }
-
-            function updateQuantity(index, change) {
-                cartItems[index].quantity += change;
-                
-                if (cartItems[index].quantity <= 0) {
-                    removeFromCart(index);
-                } else {
-                    // Update cart count
-                    cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-                    if (cartCountElement) cartCountElement.textContent = cartCount;
-                    
-                    // Update cart UI
-                    updateCartUI();
-                }
-            }
-
-            function removeFromCart(index) {
-                cartItems.splice(index, 1);
-                
-                // Update cart count
-                cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-                if (cartCountElement) cartCountElement.textContent = cartCount;
-                
-                // Update cart UI
-                updateCartUI();
-            }
-
-            // Cart sidebar toggle
-            const cartBtn = document.querySelector('.cart-btn');
-            const cartSidebar = document.querySelector('.cart-sidebar');
-            const cartOverlay = document.querySelector('.cart-overlay');
-            const cartClose = document.querySelector('.cart-close');
-            const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
-
-            function toggleCartSidebar() {
-                if (!cartSidebar || !cartOverlay) return;
-                
-                cartSidebar.classList.toggle('active');
-                cartOverlay.classList.toggle('active');
-                document.body.style.overflow = cartSidebar.classList.contains('active') ? 'hidden' : '';
-            }
-
-            if (cartBtn) {
-                cartBtn.addEventListener('click', toggleCartSidebar);
-            }
-
-            if (cartClose) {
-                cartClose.addEventListener('click', toggleCartSidebar);
-            }
-
-            if (cartOverlay) {
-                cartOverlay.addEventListener('click', toggleCartSidebar);
-            }
-
-            if (continueShoppingBtn) {
-                continueShoppingBtn.addEventListener('click', toggleCartSidebar);
-            }
+            // إصلاح مشكلة سلة التسوق
+            setTimeout(initializeCart, 100);
 
             // Search functionality
             const searchBtn = document.querySelector('.search-btn');
@@ -2812,9 +2638,8 @@ Built for athletes. Loved by everyday champions.
             
             if (searchBtn) {
                 searchBtn.addEventListener('click', function() {
-                    if (!searchContainer) return;
                     searchContainer.classList.toggle('active');
-                    if (searchContainer.classList.contains('active') && searchInput) {
+                    if (searchContainer.classList.contains('active')) {
                         searchInput.focus();
                     }
                 });
@@ -2823,7 +2648,7 @@ Built for athletes. Loved by everyday champions.
             // Close search when clicking outside
             document.addEventListener('click', function(event) {
                 if (!event.target.closest('.search-container') && !event.target.closest('.search-btn')) {
-                    if (searchContainer) searchContainer.classList.remove('active');
+                    searchContainer.classList.remove('active');
                 }
             });
 
@@ -2832,7 +2657,6 @@ Built for athletes. Loved by everyday champions.
                 searchInput.addEventListener('input', function() {
                     const searchTerm = this.value.trim();
                     const searchResults = document.querySelector('.search-results');
-                    if (!searchResults) return;
                     
                     if (searchTerm.length > 2) {
                         // Simulate search results
@@ -2889,14 +2713,12 @@ Built for athletes. Loved by everyday champions.
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
-                if (navbar) {
-                    if (window.scrollY > 100) {
-                        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                        navbar.style.backdropFilter = 'blur(10px)';
-                    } else {
-                        navbar.style.background = 'var(--secondary)';
-                        navbar.style.backdropFilter = 'none';
-                    }
+                if (window.scrollY > 100) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.backdropFilter = 'blur(10px)';
+                } else {
+                    navbar.style.background = 'var(--secondary)';
+                    navbar.style.backdropFilter = 'none';
                 }
             });
 
@@ -2939,15 +2761,10 @@ Built for athletes. Loved by everyday champions.
                 }
 
                 updateDisplay(days, hours, minutes, seconds) {
-                    const daysEl = document.getElementById('days');
-                    const hoursEl = document.getElementById('hours');
-                    const minutesEl = document.getElementById('minutes');
-                    const secondsEl = document.getElementById('seconds');
-                    
-                    if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-                    if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-                    if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-                    if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
                 }
 
                 resetTimer() {
@@ -3103,9 +2920,7 @@ Built for athletes. Loved by everyday champions.
                 setTimeout(() => {
                     notification.style.transform = 'translateX(400px)';
                     setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.remove();
-                        }
+                        notification.remove();
                     }, 300);
                 }, 3000);
             }
@@ -3115,8 +2930,8 @@ Built for athletes. Loved by everyday champions.
             if (newsletterForm) {
                 newsletterForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    const emailInput = this.querySelector('input[type="email"]');
-                    if (emailInput && emailInput.value) {
+                    const email = this.querySelector('input[type="email"]').value;
+                    if (email) {
                         showNotification('Successfully subscribed to newsletter!', 'success');
                         this.reset();
                     }
@@ -3133,9 +2948,9 @@ Built for athletes. Loved by everyday champions.
             const offCanvasOverlay = document.querySelector('.off-canvas-overlay');
             
             if (window.innerWidth > 768) {
-                if (offCanvasMenu) offCanvasMenu.classList.remove('active');
-                if (menuToggle) menuToggle.classList.remove('active');
-                if (offCanvasOverlay) offCanvasOverlay.classList.remove('active');
+                offCanvasMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                offCanvasOverlay.classList.remove('active');
                 document.body.style.overflow = '';
                 
                 // Close all dropdowns
@@ -3148,6 +2963,167 @@ Built for athletes. Loved by everyday champions.
                 });
             }
         });
+
+        // إصلاح مشكلة سلة التسوق
+        function initializeCart() {
+            // تهيئة سلة التسوق
+            let cart = JSON.parse(localStorage.getItem('step-cart')) || [];
+            updateCartDisplay();
+            
+            // إضافة event listeners لأزرار "Add to Cart"
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productData = JSON.parse(this.getAttribute('data-product'));
+                    addToCart(productData);
+                });
+            });
+            
+            // إضافة event listeners لفتح وإغلاق سلة التسوق
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartSidebar = document.querySelector('.cart-sidebar');
+            const cartClose = document.querySelector('.cart-close');
+            const cartOverlay = document.querySelector('.cart-overlay');
+            
+            if (cartBtn && cartSidebar) {
+                cartBtn.addEventListener('click', () => {
+                    cartSidebar.classList.add('active');
+                    cartOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (cartClose && cartOverlay) {
+                cartClose.addEventListener('click', closeCart);
+                cartOverlay.addEventListener('click', closeCart);
+            }
+            
+            // إضافة event listener لزر Continue Shopping
+            const continueShoppingBtn = document.querySelector('.continue-shopping-btn');
+            if (continueShoppingBtn) {
+                continueShoppingBtn.addEventListener('click', closeCart);
+            }
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('step-cart')) || [];
+            
+            // التحقق إذا كان المنتج موجود بالفعل في السلة
+            const existingItemIndex = cart.findIndex(item => item.name === product.name);
+            
+            if (existingItemIndex > -1) {
+                // زيادة الكمية إذا المنتج موجود
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // إضافة منتج جديد
+                product.quantity = 1;
+                cart.push(product);
+            }
+            
+            // حفظ في localStorage
+            localStorage.setItem('step-cart', JSON.stringify(cart));
+            
+            // تحديث العرض
+            updateCartDisplay();
+            
+            // إشعار
+            showNotification(`${product.name} added to cart!`, 'success');
+        }
+
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('step-cart')) || [];
+            const cartCountElement = document.querySelector('.cart-count');
+            const cartItemsContainer = document.querySelector('.cart-items');
+            const totalPriceElement = document.querySelector('.total-price');
+            
+            // تحديث عدد العناصر
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+            
+            // تحديث محتوى السلة
+            if (cartItemsContainer) {
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                        <div class="empty-cart">
+                            <div class="empty-cart-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <p>Your shopping cart is empty</p>
+                            <a href="#products" class="btn btn-primary">Shop Now</a>
+                        </div>
+                    `;
+                } else {
+                    cartItemsContainer.innerHTML = cart.map((item, index) => `
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/80x80/f8f9fa/666666?text=No+Image'">
+                            </div>
+                            <div class="cart-item-details">
+                                <h4 class="cart-item-title">${item.name}</h4>
+                                <p class="cart-item-category">${item.category}</p>
+                                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                                <div class="cart-item-actions">
+                                    <button class="quantity-btn minus-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                    <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                                    <button class="quantity-btn plus-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                                    <button class="remove-item" onclick="removeFromCart(${index})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+            
+            // تحديث السعر الإجمالي
+            if (totalPriceElement) {
+                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+            }
+        }
+
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('step-cart')) || [];
+            
+            if (cart[index]) {
+                cart[index].quantity += change;
+                
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                
+                localStorage.setItem('step-cart', JSON.stringify(cart));
+                updateCartDisplay();
+            }
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('step-cart')) || [];
+            
+            if (cart[index]) {
+                cart.splice(index, 1);
+                localStorage.setItem('step-cart', JSON.stringify(cart));
+                updateCartDisplay();
+                showNotification('Item removed from cart', 'info');
+            }
+        }
+
+        function closeCart() {
+            const cartSidebar = document.querySelector('.cart-sidebar');
+            const cartOverlay = document.querySelector('.cart-overlay');
+            
+            if (cartSidebar) cartSidebar.classList.remove('active');
+            if (cartOverlay) cartOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showNotification(message, type = 'info') {
+            // إنشاء إشعار بسيط
+            alert(message); // يمكن استبدال هذا بنظام إشعارات أكثر تطوراً
+        }
     </script>
 </body>
 </html>
