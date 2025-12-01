@@ -339,22 +339,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const desktopNavItems = document.querySelectorAll('.desktop-nav-item');
     desktopNavItems.forEach(item => {
+        const link = item.querySelector('.desktop-nav-link');
         const dropdown = item.querySelector('.desktop-dropdown');
         const arrow = item.querySelector('.dropdown-arrow');
-        
+
         if (dropdown) {
-            item.addEventListener('mouseenter', () => {
-                dropdown.style.opacity = '1';
-                dropdown.style.visibility = 'visible';
-                dropdown.style.transform = 'translateY(0)';
-                if (arrow) arrow.style.transform = 'rotate(180deg)';
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
             });
-            
+
+            item.addEventListener('mouseenter', () => {
+                dropdown.classList.add('active');
+            });
+
             item.addEventListener('mouseleave', () => {
-                dropdown.style.opacity = '0';
-                dropdown.style.visibility = 'hidden';
-                dropdown.style.transform = 'translateY(10px)';
-                if (arrow) arrow.style.transform = 'rotate(0)';
+                dropdown.classList.remove('active');
             });
         }
     });

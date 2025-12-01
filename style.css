@@ -125,7 +125,8 @@ body {
     overflow: hidden;
 }
 
-.desktop-nav-item:hover .desktop-dropdown {
+.desktop-nav-item:hover .desktop-dropdown,
+.desktop-dropdown.active {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
